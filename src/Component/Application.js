@@ -172,21 +172,21 @@ class Application extends Component {
                             </div>
                         </div>
                         <div className="row g-3 check">
-                            <label  className="form-label" name="gender" onChange={this.handler}>Gender</label>
+                            <label  className="form-label">Gender</label>
                         
                         <div className="form-check">
-                            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="male"/>
+                            <input className="form-check-input" name="gender" type="radio" id="exampleRadios2" value="male" onChange={this.handler}/>
                             <label className="form-check-label" >
                             Male
                             </label>
                         </div>
                         <div className="form-check">
-                            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="female"/>
+                            <input className="form-check-input" type="radio" name="gender" id="exampleRadios3" value="female" onChange={this.handler}/>
                             <label className="form-check-label">
                             Female
                             </label>
-                        </div>{errors.gender.length>0 && <span style={{color:'red',fontSize:'15px'}}>{errors.gender}</span>}<br/>
                         </div>
+                        </div>{this.state.errors.gender}
                         <div className="col-md-5">
                             <label className="form-label">Email</label>
                             <input type="email" name="email" className="form-control" id="email" onChange={this.handler}/>{errors.email.length>0 && <span style={{color:'red',fontSize:'15px'}}>{errors.email}</span>}<br/>
