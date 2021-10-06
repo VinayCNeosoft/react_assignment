@@ -1,4 +1,3 @@
-//import './App.css';
 import './Component/style.css'
 import List from './Component/List';
 import Application from './Component/Application';
@@ -18,5 +17,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

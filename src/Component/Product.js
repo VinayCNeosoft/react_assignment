@@ -1,102 +1,126 @@
 import React, { Component } from 'react'
-import data from '../Component/Products.json';
-import Cart from '../Component/Cart'
-export class Products extends Component {
-    constructor(props){
-         super(props);
-         this.state={
-             proData:[],
-             count:0,
-             countmain:0
-            };
+import json from './Products.json'
+import './style.css'
+
+class Product extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {proData:[],arrlen:'',cart:JSON.parse(localStorage.getItem('mycart')) }
+    }
+    componentDidMount(){
+        this.setState({proData:json.products})
+        if(localStorage.getItem('mycart')!==null){
+            let arr=JSON.parse(localStorage.getItem('mycart'))
+            console.log("arr",arr);
+            let sum=0
+            arr.map((d)=>{
+                sum=sum+d.quantity
+                return sum
+            })
+            this.setState({arrlen:sum})
+        }
     }
 
-    componentDidMount(){
-        this.setState({proData:data.products})
-        if(localStorage.getItem('mycart')!=undefined){
-            let arr=JSON.parse(localStorage.getItem('mycart'));
-            this.setState({count:arr.length});
+    addCart=(id,quantity)=>{
+        if(localStorage.getItem('mycart')!==null)
+        {
+            let arr=JSON.parse(localStorage.getItem('mycart'))
+            console.log(arr)
+            if(arr.some(e=>e.id===id)){
+                arr.map((d)=>{
+                    if(d.id===id){
+                        return (d.quantity=d.quantity+1,quantity=d.quantity)
+                    }
+                    return arr
+                })
+                localStorage.setItem('mycart',JSON.stringify(arr))
+                alert('Quantity Added !')
+            }
+            else{
+                arr.push({id,quantity})
+                localStorage.setItem('mycart',JSON.stringify(arr))
+                alert('Product Added to Cart !')
+            }
+        }
+        else{
+            let arr=[{id,quantity}]
+            arr.push()
+            localStorage.setItem('mycart',JSON.stringify(arr))
+            alert('Product Added to Cart !')
+        }
+    }
+
+    displayCart=(event)=>{
+        event.preventDefault()
+        console.log(this.state.cart)
+        if(localStorage.getItem('mycart')!== null){
+            document.getElementById("carttable").style.visibility="visible";
+        }
+        else{
+            document.getElementById("carttable").style.visibility="hidden";
         }
     }
     
-    addCart=(id)=>{
-       if(localStorage.getItem('mycart')!=undefined){
-          let arr=JSON.parse(localStorage.getItem('mycart'));
-          if(arr.includes(id))
-            {
-                alert("Product Already added");
-                this.state.proData[id].quantity+=1
-                console.log(this.state.proData)
-                this.setState({countmain:0})
-                this.state.proData.forEach((data) => {
-                    this.state.countmain += data.quantity;
-            });
-        }
-          else {
-          arr.push(id);
-          localStorage.setItem('mycart',JSON.stringify(arr));
-          this.setState({count:arr.length});
-          alert("Product added to Cart")
-          this.state.proData[id].quantity+=1
-          }
-       }
-       else {
-           let arr=[];
-           arr.push(id);
-           localStorage.setItem('mycart',JSON.stringify(arr));
-           alert("Product Add to Cart");
-           this.state.proData[id].quantity+=1
-            console.log(this.state.proData)
-       }
-    }
-
     render() {
         return (
-            <>  
-            <ul className="nav">
-                <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li className="nav-item">
-                <a className="nav-link" href="#">About</a>
-                </li>
-                <li className="nav-item">
-                <a className="nav-link" href="#">Cart {
-                this.state.countmain=0,this.state.proData.forEach((data) => {
-                        this.state.countmain += data.quantity;
-                        })} {this.state.countmain}
-                        <span className="badge badge-primary"></span></a>
-                </li>
-                <li className="nav-item">
-                <a className="nav-link disabled">Disabled</a>
-                </li>
-            </ul>
-            <center>
-                <h2> Latest Products</h2>
-                <hr/>
-                <div className="row container">
-                    {this.state.proData.map((pro,i)=>
-                    <div className="col-md-3" key={i}>
-                        <div className="card" >
-                            <img className="card-img-top" src={pro.images} alt="not available"/>
-                            <div className="card-body">
-                                <h5 className="card-title">{pro.pname}</h5>
-                                <p className="card-text">
-                                    Price : <i>{pro.price}</i><br/>
-                                    Quantity : <i>{pro.quantity}</i><br/>
-                                </p>
-                            
-                                <button className="btn btn-primary" onClick={()=>this.addCart(pro.id)}>Add Cart</button>
-                            </div>
-                        </div>
-                    </div>)}
-                </div>
-                </center>
+            <>
+            <div className="container">
+                <nav className="nav navbar-dark bg-dark">
+                    <a className="nav-link" href=" ">Home</a>
+                    <a className="nav-link" href=" ">About</a>
+                    <a key={Math.random()} className="nav-link" href=" " onClick={()=>this.displayCart()}>
+                        Cart <span>{this.state.arrlen}</span>
+                    </a>
+                    <a key={Math.random()} className="nav-link" href=" ">Disabled</a>
+                </nav><br/>
 
-                <Cart data={this.state.proData}/>
+                <h1 key={Math.random()}>Products</h1><br/>
+                <div className="row container m-auto" key={Math.random()}>
+                    {this.state.proData.map(pro =>
+                        <div className="card-body col-sm-3 bg-light" key={Math.random()}>
+                        <img className="card-img-top" height="200px" width="200px" src={pro.images} alt="not found" 
+                        key={Math.random()}></img>
+                        <p className="card-title" key={Math.random()}>{pro.pname}</p>
+                        <p className="card-text" key={Math.random()}>
+                            Price:<span style={{color:"blue",fontSize:"large", fontWeight:"bold"}} 
+                            key={Math.random()}>${pro.price}</span>
+                        </p>
+                        <a key={Math.random()} href="" onClick={()=>this.addCart(pro.id,pro.quantity)}
+                        className="btn btn-add">Add to Cart</a>
+                        </div>)}
+                </div>
+                <div key={Math.random()} className="table-responsive container" id="carttable" style={
+                {visibility:"visible"}}>
+                    <h1>Your Cart Detail's</h1>
+                    <table key={Math.random()} className="table table-hover table-bordered">
+                    <thead key="thead">
+                        <tr className="" key={Math.random()}>
+                            <th key={Math.random()}>Product Id</th>
+                            <th key={Math.random()}>Product Name</th>
+                            <th key={Math.random()}>Product Quantity</th>
+                            <th key={Math.random()}>Price Per Product</th>
+                            <th key={Math.random()}>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody key="tbody">
+                        {this.state.cart!==null && this.state.cart.map((pro)=>
+                        (this.state.proData.map((d)=>
+                        ((pro.id === d.id)?
+                            <tr key={Math.random()}>
+                                <td>{pro.id}</td>
+                                <td >{d.pname}</td>
+                                <td >{pro.quantity}</td>
+                                <td >{d.price}</td>
+                                <td >{d.price*(pro.quantity)}</td>
+                            </tr>
+                            :null)))
+                            )}
+                    </tbody>
+                    </table>
+                </div> 
+            </div>
             </>
         )
     }
 }
-
-export default Products
+export default Product

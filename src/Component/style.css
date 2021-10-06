@@ -10,6 +10,13 @@
 .list-group{
     border-radius: 20px;
 }
+h1{
+    text-align: center;
+}
+.container{
+    border: black 2px solid;
+    padding: 5px;
+}
 .custom_li{
     margin: 0px;
     left: 40px;
@@ -19,11 +26,11 @@
     border-radius: 20px;
 }
 th, td {
-	padding: 15px;
     text-align: center;
     border: turquoise 2px solid;
     width: 200px;
-    
+    font-size:20px;
+    font-weight: bold;
 }
 thead {
     color: wheat;
@@ -77,9 +84,39 @@ label{
     
     color: ghostwhite;
 }
+.btn-add{
+    width: auto;
+    height: auto;
+    float: left;
+    background-color: blueviolet;
+    margin: 10px;
+    color: cornsilk;
+}
+.card-img-top{
+    border: chartreuse solid 2px;
+    margin: 0%;
+}
+.card-title{
+    text-align: left;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: coral;
+}
+.card-text{
+    text-align: left;
+    margin: 10px;
+}
+
+
 span{
     margin: 0px;
 }
 .num{
     text-decoration: none;
 }
+.card-body{
+    border: tomato 2px solid;
+    margin: 10px;
+}
+

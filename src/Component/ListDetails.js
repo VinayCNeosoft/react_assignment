@@ -8,6 +8,7 @@ class ListDetails extends Component{
     return (
       <div>
         <center>
+        <h1 className="display-5 l-head"> * 20 Employee Detail in Table * </h1>
         <table className="table">
             <thead>
                 <tr key = {'inr'}>

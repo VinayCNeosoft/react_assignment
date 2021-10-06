@@ -160,7 +160,7 @@ class Application extends Component {
                         <div className="row g-3">
                             <div className="col">
                                 <label className="form-label">Father First Name</label>
-                                <input type="text" name="ffname" className="form-control" placeholder="" aria-label="First name" onChange={this.handler} required />{errors.flname.length>0 && <span style={{color:'red',fontSize:'15px'}}>{errors.ffname}</span>}<br/>
+                                <input type="text" name="ffname" className="form-control" placeholder="" aria-label="First name" onChange={this.handler} required />{errors.ffname.length>0 && <span style={{color:'red',fontSize:'15px'}}>{errors.ffname}</span>}<br/>
                             </div>
                             <div className="col">
                                 <label className="form-label">Father  Middle Name</label>

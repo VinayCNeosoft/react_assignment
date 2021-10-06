@@ -40,7 +40,7 @@ class List extends Component
     
         return (
           <div>
-            <h1 className="display-5 l-head"> 20 Employee Detail in List *</h1>
+            <h1 className="display-5 l-head"> * 20 Employee Detail in List * </h1>
             <hr/>
                 <ol className="list-group">
                 {employee.map(item=>(
